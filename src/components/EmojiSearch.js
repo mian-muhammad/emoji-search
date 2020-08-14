@@ -1,38 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
+import emojis from './emojis.json';
 
 class EmojiSearch extends Component {
 	constructor() {
 		super();
 		this.state = {
-			error: null,
-			isLoaded: false,
-			items: [],
-			toBeDisplay: []
+			items: emojis,
+			toBeDisplay: emojis
 		};
-	}
-
-	componentDidMount() {
-		fetch(
-			`https://emoji-api.com/emojis?access_key=${process.env.REACT_APP_ACCESS_KEY}`
-		)
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						isLoaded: true,
-						items: result,
-						toBeDisplay: result
-					});
-				},
-
-				(error) => {
-					this.setState({
-						isLoaded: true,
-						error
-					});
-				}
-			);
 	}
 
 	searchEmoji(event) {
@@ -60,31 +36,26 @@ class EmojiSearch extends Component {
 	}
 
 	render() {
-		const { error, isLoaded, toBeDisplay } = this.state;
-		if (error) {
-			return <div>Error: {error.message}</div>;
-		} else if (!isLoaded) {
-			return <div>Loading...</div>;
-		} else {
-			return (
-				<div id="container">
-					<h3>Emoji Search</h3>
-					<input
-						name="emoji"
-						type="text"
-						id="myInput"
-						placeholder="Search an emoji"
-						onChange={(event) => this.searchEmoji(event)}
-					/>
+		const { toBeDisplay } = this.state;
 
-					<ul id="myUL">
-						{toBeDisplay.map((item) => (
-							<li key={item.codePoint}>{item.character}</li>
-						))}
-					</ul>
-				</div>
-			);
-		}
+		return (
+			<div id="container">
+				<h3>Emoji Search</h3>
+				<input
+					name="emoji"
+					type="text"
+					id="myInput"
+					placeholder="Search an emoji"
+					onChange={(event) => this.searchEmoji(event)}
+				/>
+
+				<ul id="myUL">
+					{toBeDisplay.map((item) => (
+						<li key={item.codePoint}>{item.character}</li>
+					))}
+				</ul>
+			</div>
+		);
 	}
 }
 
