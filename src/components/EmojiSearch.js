@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import emojis from './emojis.json';
+import List from './List';
 
 class EmojiSearch extends Component {
 	constructor() {
@@ -40,20 +41,17 @@ class EmojiSearch extends Component {
 
 		return (
 			<div id="container">
-				<h3>Emoji Search</h3>
+				<h3 className="item">Emoji Search</h3>
 				<input
 					name="emoji"
+					className="item"
 					type="text"
 					id="myInput"
 					placeholder="Search an emoji"
 					onChange={(event) => this.searchEmoji(event)}
 				/>
 
-				<ul id="myUL">
-					{toBeDisplay.map((item) => (
-						<li key={item.codePoint}>{item.character}</li>
-					))}
-				</ul>
+				<List items={toBeDisplay} />
 			</div>
 		);
 	}
